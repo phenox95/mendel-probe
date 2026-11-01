@@ -1,33 +1,32 @@
-Der Hundezuchtverein · Testraum Mendel · Stand 01.11.2026
-==========================================================
+Der Hundezuchtverein · Testraum Mendel · Stand 01.11.2026 (Fassung V3: zwei Räume, eigenes Design)
+=====================================================================================================
 Eigenständiges Spiel (kein Evolutions-Inhalt). Testet die Engine für das Evolutionsspiel.
-Engine: Kopie von Engine 2.0 (20.10.2026) mit eigenem Speicher.
+Engine: Kopie von Engine 2.0 (20.10.2026) mit eigenem Speicher und eigenem, hellem Design
+(Grün und Terrakotta, Überschriften in Bitter, Fließtext in Atkinson Hyperlegible).
 
 WAS IM ORDNER IST
-  index.html                 Startseite
-  raum/index.html, mendel.js Raum mit Mission 1 und 2 (Lösungen nur als Hash)
-  engine/                    Engine-Kopie (tresor.js, tresor.css, Schriften)
-  bilder/vereinsheim.svg     PLATZHALTER-Raumbild (selbst gezeichnet, keine Lizenzfrage)
-  figuren/kemal.jpg          Figur Kemal (aus dem Evolutionsspiel übernommen)
-  build.py                   erzeugt raum/mendel.js aus _quelle/mendel.src.js
-NICHT im öffentlichen Repo: _quelle/ (enthält Lösungen im Klartext, steht in .gitignore)
+  index.html                      Startseite mit zwei Räumen
+  raum1/ (index.html, raum1.js)   Das Vereinsbüro · Mission 1 · Brief und Zuchtbuch, Teil 1
+  raum2/ (index.html, raum2.js)   Die Zwinger-Stube · Mission 2 · Hypothesen und Einspruch des Züchters
+  engine/                         Engine-Kopie mit neuem Design
+  bilder/                         Dackel-Fotos (KI-Bilder), buero.jpg und stube.jpg (Raumbilder, KI-Illustrationen)
+  figuren/                        kemal.jpg (aus dem Evolutionsspiel), zuechter.jpg
+  build.py                        erzeugt raum1/raum1.js und raum2/raum2.js aus _quelle/
+NICHT im öffentlichen Repo: _quelle/ (Lösungen im Klartext, steht in .gitignore)
 
 EIGENER SPEICHER
-  Der Spielstand liegt unter dem Schlüssel „mendel.v1“. Das Evolutionsspiel nutzt „tresor.v1“.
-  Beide Spiele laufen auf derselben Domain (github.io) und stören sich so nicht.
+  Spielstand unter „mendel.v1“, das Evolutionsspiel nutzt „tresor.v1“. Beide Räume teilen sich einen Spielstand.
   Spielstand-Dateien und Notfall-Codes beider Spiele sind nicht austauschbar.
 
 EINSPIELEN
-  1. Neues GitHub-Projekt anlegen, z. B. „mendel-probe“ (Pages einschalten, Branch main, Ordner root).
-  2. Inhalt dieses Ordners hochladen, ohne den Ordner _quelle.
-  3. Nach etwa 1 Minute auf dem iPad öffnen: https://phenox95.github.io/mendel-probe/
-  4. Alten Spielstand löschen (vor jedem neuen Durchlauf): Adresse mit ?neu=1 öffnen.
-  5. Im Raum auf „Menü“: ganz unten steht die Fassung (Testraum Mendel V1 · 01.11.2026).
+  1. Im GitHub-Projekt den ALTEN Inhalt löschen (alter Ordner raum/ entfällt) und den Inhalt dieses Ordners hochladen,
+     ohne _quelle.
+  2. Nach etwa 1 Minute auf dem iPad öffnen, vor jedem neuen Durchlauf mit ?neu=1 am Ende der Adresse.
+  3. Im Raum auf „Menü“: ganz unten steht die Fassung (Testraum Mendel V3).
 
-LÖSUNGEN ÄNDERN
-  _quelle/mendel.src.js bearbeiten, dann „python3 build.py“ ausführen. Der Build setzt die Hashes neu.
+NOCH OFFEN
+  Porträt der Käuferin fehlt (bisher kein Bild, der Brief ist reiner Text).
+  Wenn echte Raumbilder da sind, müssen die Klickbereiche (rect) in _quelle/raum1.src.js und raum2.src.js angepasst werden.
 
-STAND DER ABNAHME (automatischer Test, Chromium, 1180×820 und 1024×768)
-  Beide Missionen mit je einem Fehlversuch pro Rätsel durchgespielt: Rückmeldungen, Tipps, Notfallöffnung,
-  Speichern im Browser und Neuladen, Notfall-Code, Missionsabschluss. Keine Browserfehler.
-  NICHT getestet: echtes iPad (Safari), Spielstand-Upload nach WebWeaver, Probe mit einem Team.
+STAND DER ABNAHME (automatischer Test, Chromium): beide Räume mit Fehlversuchen durchgespielt, 16 von 16 Prüfschritten, keine Browserfehler.
+NICHT getestet: echtes iPad (Safari), Spielstand-Upload nach WebWeaver, Probe mit einem Team.

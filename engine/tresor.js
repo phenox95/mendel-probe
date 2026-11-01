@@ -235,6 +235,7 @@
     kemal: { name: 'Kemal Aydın', role: 'Helfer im Zuchtverein', img: 'figuren/kemal.jpg' },
     wendt: { name: 'Dr. Johanna Wendt', role: 'Kuratorin', img: 'figuren/wendt.jpg' },
     hallmann: { name: 'Viktor Hallmann', role: 'Händler', img: 'figuren/hallmann.jpg' },
+    zuechter: { name: 'Der Züchter', role: 'seit 30 Jahren im Verein', img: 'figuren/zuechter.jpg' },
     sammler: { name: 'Ein Sammler', role: 'Fossilienbörse', img: null }
   };
   var dialogStack = [];
