@@ -1,0 +1,33 @@
+Der Hundezuchtverein · Testraum Mendel · Stand 01.11.2026
+==========================================================
+Eigenständiges Spiel (kein Evolutions-Inhalt). Testet die Engine für das Evolutionsspiel.
+Engine: Kopie von Engine 2.0 (20.10.2026) mit eigenem Speicher.
+
+WAS IM ORDNER IST
+  index.html                 Startseite
+  raum/index.html, mendel.js Raum mit Mission 1 und 2 (Lösungen nur als Hash)
+  engine/                    Engine-Kopie (tresor.js, tresor.css, Schriften)
+  bilder/vereinsheim.svg     PLATZHALTER-Raumbild (selbst gezeichnet, keine Lizenzfrage)
+  figuren/kemal.jpg          Figur Kemal (aus dem Evolutionsspiel übernommen)
+  build.py                   erzeugt raum/mendel.js aus _quelle/mendel.src.js
+NICHT im öffentlichen Repo: _quelle/ (enthält Lösungen im Klartext, steht in .gitignore)
+
+EIGENER SPEICHER
+  Der Spielstand liegt unter dem Schlüssel „mendel.v1“. Das Evolutionsspiel nutzt „tresor.v1“.
+  Beide Spiele laufen auf derselben Domain (github.io) und stören sich so nicht.
+  Spielstand-Dateien und Notfall-Codes beider Spiele sind nicht austauschbar.
+
+EINSPIELEN
+  1. Neues GitHub-Projekt anlegen, z. B. „mendel-probe“ (Pages einschalten, Branch main, Ordner root).
+  2. Inhalt dieses Ordners hochladen, ohne den Ordner _quelle.
+  3. Nach etwa 1 Minute auf dem iPad öffnen: https://phenox95.github.io/mendel-probe/
+  4. Alten Spielstand löschen (vor jedem neuen Durchlauf): Adresse mit ?neu=1 öffnen.
+  5. Im Raum auf „Menü“: ganz unten steht die Fassung (Testraum Mendel V1 · 01.11.2026).
+
+LÖSUNGEN ÄNDERN
+  _quelle/mendel.src.js bearbeiten, dann „python3 build.py“ ausführen. Der Build setzt die Hashes neu.
+
+STAND DER ABNAHME (automatischer Test, Chromium, 1180×820 und 1024×768)
+  Beide Missionen mit je einem Fehlversuch pro Rätsel durchgespielt: Rückmeldungen, Tipps, Notfallöffnung,
+  Speichern im Browser und Neuladen, Notfall-Code, Missionsabschluss. Keine Browserfehler.
+  NICHT getestet: echtes iPad (Safari), Spielstand-Upload nach WebWeaver, Probe mit einem Team.
