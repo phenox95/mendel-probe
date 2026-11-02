@@ -5,18 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Der Hundezuchtverein</title>
-<link rel="stylesheet" href="engine/tresor.css?v=20261101g">
+<link rel="stylesheet" href="engine/tresor.css?v=20261102b">
 </head>
 <body>
 <div id="preview-hint">Das Spiel wird geladen …<br><br>Bleibt diese Meldung stehen, öffnet den Link in Safari und ladet die Seite neu.<br>Hilft das nicht, fehlen Dateien: Bitte der Lehrkraft Bescheid geben.</div>
 <main id="start"></main>
-<script src="engine/tresor.js?v=20261101g"></script>
+<script src="engine/tresor.js?v=20261102b"></script>
 <script>
 TRESOR.start({
   base: '',
+  intro: [
+    { from: 'erzaehler', text: 'Ihr arbeitet im Büro für Tiergenetik. Euer Team ({team}) wird gerufen, wenn jemand Zahlen und Behauptungen gegeneinander hält und niemand mehr weiß, wer recht hat.\n\nIhr seid Gutachterinnen und Gutachter. Ihr urteilt nicht nach Gefühl, sondern nach Belegen.' },
+    { from: 'kemal', text: 'Guten Morgen. Ich bin Kemal Aydın von der Geschäftsstelle des Zuchtvereins. Wir haben ein Problem, und es ist ein ernstes.\n\nVor vier Wochen hat Frau Sommer bei uns einen Welpen gekauft. Seit gestern liegt ihr Brief auf meinem Tisch: Sie hält unser Zuchtbuch für falsch und fordert 1.800 Euro zurück.' },
+    { from: 'kemal', text: 'Der Vorstand weiß nicht, wer recht hat. Enthält das Zuchtbuch Fehler, verliert der Verein seine Zuchtzulassung. Stimmt es und wir zahlen trotzdem, ist das Geld des Vereins weg.\n\nIn zwei Wochen tagt der Vorstand. Bis dahin braucht er euer Gutachten.' },
+    { from: 'kemal', text: 'Das Gutachten hat vier Teile: Zwei schreibt ihr im Spiel, zwei im Unterricht. Heute geht es um Teil 1: Was behauptet Frau Sommer, und was steht wirklich im Zuchtbuch?\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für das Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
+    { from: 'kemal', text: 'Hinter jedem Rätsel steckt dieselbe Frage: Was belegt das, und was nicht? Kommt ihr nicht weiter, gibt es Tipps. Eine Lösung bekommt ihr nur, wenn ihr sie im Logbuch erklärt.\n\nViel Erfolg, {team}. Das Vereinsbüro ist offen.' }
+  ],
   rooms: [
-    { title: 'Das Vereinsbüro', place: 'Raum 1 · Der Brief der Käuferin', href: 'raum1/index.html', color: '#2F6B4F' },
-    { title: 'Die Zwinger-Stube', place: 'Raum 2 · Der Einspruch des Züchters', href: 'raum2/index.html', color: '#C4552B' }
+    { title: 'Das Vereinsbüro', place: 'Raum 1 · Der Brief der Käuferin', href: 'raum1/index.html', color: '#0B5C7A' },
+    { title: 'Die Zwinger-Stube', place: 'Raum 2 · Der Einspruch des Züchters', href: 'raum2/index.html', color: '#D96F00' }
   ]
 });
 </script>

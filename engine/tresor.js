@@ -232,7 +232,8 @@
   /* ---------------- Oberfläche: Dialoge, Meldungen ---------------- */
   var BASE = '';
   var FIGURES = {
-    kemal: { name: 'Kemal Aydın', role: 'Helfer im Zuchtverein', img: 'figuren/kemal.jpg' },
+    kemal: { name: 'Kemal Aydın', role: 'Geschäftsstelle des Zuchtvereins', img: 'figuren/kemal.jpg' },
+    erzaehler: { name: 'Büro für Tiergenetik', role: 'Montagmorgen, 8:40 Uhr', img: null },
     wendt: { name: 'Dr. Johanna Wendt', role: 'Kuratorin', img: 'figuren/wendt.jpg' },
     hallmann: { name: 'Viktor Hallmann', role: 'Händler', img: 'figuren/hallmann.jpg' },
     zuechter: { name: 'Der Züchter', role: 'seit 30 Jahren im Verein', img: 'figuren/zuechter.jpg' },
@@ -1421,6 +1422,18 @@
     }
   };
 
+  /* ---------------- Einstiegsstory (einmal pro Team, nach „Fall übernehmen“) ---------------- */
+  function playIntro(pages) {
+    if (!pages || !pages.length || S.seen.storyIntro) return;
+    S.seen.storyIntro = true; persist();
+    var i = 0;
+    (function next() {
+      if (i >= pages.length) return;
+      var pg = pages[i++];
+      message(pg.from, String(pg.text).replace(/\{team\}/g, S.team.join(', ')), next, false);
+    })();
+  }
+
   /* ---------------- Startseite ---------------- */
   function buildStart(def) {
     var root = document.getElementById('start');
@@ -1438,7 +1451,7 @@
             el('button', { class: 'btn', text: 'Fall übernehmen', onclick: function () {
               var team = inputs.map(function (i) { return i.value.trim(); }).filter(Boolean);
               if (!team.length) { wrong(fb, 'Tragt mindestens einen Vornamen ein.'); return; }
-              S = blank(team); persist(); sessionStorage.setItem('mendel.confirmed', '1'); render();
+              S = blank(team); persist(); sessionStorage.setItem('mendel.confirmed', '1'); render(); playIntro(def.intro);
             } }), fb])),
           el('section', { class: 'panel' }, [el('h2', { text: 'Weiterspielen' }), el('p', { class: 'muted', text: 'Ladet eure Spielstand-Datei aus WebWeaver.' }),
             el('button', { class: 'btn', text: 'Spielstand laden', onclick: function () { pickFile(function (err) { if (err) wrong(fb2, err); else { sessionStorage.setItem('mendel.confirmed', '1'); render(); } }); } }),

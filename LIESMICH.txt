@@ -1,4 +1,4 @@
-Der Hundezuchtverein · Testraum Mendel · Stand 01.11.2026 (Fassung V4: zwei Räume, eigenes Design)
+Der Hundezuchtverein · Testraum Mendel · Stand 01.11.2026 (Fassung V7: zwei Räume, eigenes Design)
 =====================================================================================================
 Eigenständiges Spiel (kein Evolutions-Inhalt). Testet die Engine für das Evolutionsspiel.
 Engine: Kopie von Engine 2.0 (20.10.2026) mit eigenem Speicher und eigenem, hellem Design
@@ -22,7 +22,7 @@ EINSPIELEN
   1. Im GitHub-Projekt den ALTEN Inhalt löschen (alter Ordner raum/ entfällt) und den Inhalt dieses Ordners hochladen,
      ohne _quelle.
   2. Nach etwa 1 Minute auf dem iPad öffnen, vor jedem neuen Durchlauf mit ?neu=1 am Ende der Adresse.
-  3. Im Raum auf „Menü“: ganz unten steht die Fassung (Testraum Mendel V4).
+  3. Im Raum auf „Menü“: ganz unten steht die Fassung (Testraum Mendel V7).
 
 NOCH OFFEN
   Porträt der Käuferin fehlt (bisher kein Bild, der Brief ist reiner Text).
@@ -30,3 +30,8 @@ NOCH OFFEN
 
 STAND DER ABNAHME (automatischer Test, Chromium): beide Räume mit Fehlversuchen durchgespielt, 16 von 16 Prüfschritten, keine Browserfehler.
 NICHT getestet: echtes iPad (Safari), Spielstand-Upload nach WebWeaver, Probe mit einem Team.
+
+NEU IN V7
+  Einstiegsstory (5 Seiten) nach „Fall übernehmen“, einmal pro Team. Text in index.html (Bereich intro).
+  Rätsel an Klasse 10 angepasst: Brief mit 8 Sätzen, Einspruch mit 3 Kategorien, Skizze wendet das Münzmodell M4 an,
+  Anteil in Prozent, mehr Ablenker. M4 liegt im Spiel als Dokument (Raum 2).

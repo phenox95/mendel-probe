@@ -7,11 +7,11 @@
 TRESOR.room({
   base: '../',
   id: 'raum2',
-  version: 'Testraum Mendel V4 · Raum 2 · 01.11.2026',
+  version: 'Testraum Mendel V7 · Raum 2 · 01.11.2026',
   title: 'Die Zwinger-Stube',
   subtitle: 'Genetik · Der Einspruch des Züchters',
   image: '../bilder/stube.jpg',
-  imageAlt: 'Eine warme Stube: links ein hohes Bücherregal mit einem dunkelroten Zuchtbuch, in der Mitte eine hölzerne Wurfkiste mit drei schlafenden Welpen und ein Fenster, rechts ein blauer Tisch mit einem Blatt Papier.',
+  imageAlt: 'Ein nüchterner Raum: links ein hohes Bücherregal mit einem dunkelroten Buch, in der Mitte ein Fenster über einer Holzkiste mit drei schlafenden Welpen, rechts ein blaugrauer Tisch mit Stuhl und einem Blatt Papier.',
   size: [1024, 768],
   flashlight: false,
   unlockMode: 'auto',
@@ -35,15 +35,15 @@ TRESOR.room({
   ],
 
   hotspots: [
-    { id: 'zuchtbuch2', label: 'Zuchtbuch, Teil 2, im Regal', rect: [2, 11, 24.5, 79], states: [
+    { id: 'zuchtbuch2', label: 'Zuchtbuch, Teil 2, im Regal', rect: [4, 10, 26.5, 75.5], states: [
       { if: { unlocked: 'mendel-2', notSolved: 'probe-hyp-zahl' }, action: { type: 'puzzle', puzzle: 'probe-hyp-zahl' } },
       { if: { unlocked: 'mendel-2', solved: 'probe-hyp-zahl', notSolved: 'probe-hyp-beleg' }, action: { type: 'puzzle', puzzle: 'probe-hyp-beleg' } },
       { if: { unlocked: 'mendel-2' }, action: { type: 'doc', doc: 'm3' } },
       { action: { type: 'text', text: 'Im Regal steht ein zweites Zuchtbuch. Startet zuerst die Mission.' } } ] },
-    { id: 'wurfkiste', label: 'Wurfkiste', rect: [33.5, 64, 34.5, 26], states: [
-      { if: { unlocked: 'mendel-2' }, action: { type: 'docs', title: 'Wurfkiste, Auftrag und Begriffe', docs: ['foto-wurf-neu', 'auftrag', 'begriffe'] } },
+    { id: 'wurfkiste', label: 'Wurfkiste', rect: [31.5, 68, 37, 27], states: [
+      { if: { unlocked: 'mendel-2' }, action: { type: 'docs', title: 'Wurfkiste, Auftrag, Begriffe und Modell', docs: ['foto-wurf-neu', 'auftrag', 'begriffe', 'm4'] } },
       { action: { type: 'text', text: 'Eine Wurfkiste mit Welpen. Startet zuerst die Mission.' } } ] },
-    { id: 'zuechter', label: 'Pult des Züchters', rect: [74.5, 56, 25, 34], states: [
+    { id: 'zuechter', label: 'Pult des Züchters', rect: [70, 52.5, 30, 43], states: [
       { if: { unlocked: 'mendel-2', solved: 'probe-hyp-beleg', notSolved: 'probe-einspruch-markup' }, action: { type: 'puzzle', puzzle: 'probe-einspruch-markup' } },
       { if: { unlocked: 'mendel-2', solved: 'probe-einspruch-markup', notSolved: 'probe-einspruch-skizze' }, action: { type: 'puzzle', puzzle: 'probe-einspruch-skizze' } },
       { action: { type: 'text', text: 'Hier liegt der Einspruch eines Züchters. Erst muss das Zuchtbuch, Teil 2, geprüft werden.' } } ] }
@@ -54,6 +54,8 @@ TRESOR.room({
       text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet die Käuferin, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Welche Erklärung halten die Daten aus, und was sagt der Züchter dazu?\nTeil 4 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
     'begriffe': { title: 'Begriffskarte', tag: 'Karte', style: 'paper',
       text: 'Behauptung: Jemand sagt etwas, ohne einen Beleg zu nennen.\nBeobachtung: Man kann es sehen oder messen.\nDeutung: Eine Erklärung dafür, warum etwas so ist.\nHypothese: Eine Vermutung, die man prüfen kann.\nAnlage: Das, was in einem Tier festlegt, welches Fell es bekommt. Den Fachbegriff dafür lernt ihr später.\nGutachten: Eine begründete Einschätzung für den Vorstand.' },
+    'm4': { title: 'M4 · Modellkarte aus dem Unterricht', tag: 'Karte', style: 'paper',
+      text: '1. Jeder Welpe bekommt von jedem Elterntier eine Anlage.\n2. Jedes Elterntier hat zwei Anlagen für das Fell und gibt davon eine weiter, zufällig.\n3. Anlage K = kurzes Fell, Anlage l = langes Fell.\n4. Langes Fell zeigt ein Welpe nur, wenn er zweimal l hat.' },
     'foto-wurf-neu': { title: 'Foto: der neue Wurf', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/wurf-gemischt.jpg',
       text: 'Zwei Welpen aus Teil 1 wurden verpaart. Im neuen Wurf ist ein Welpe mit langem Fell. Die Elterntiere haben beide kurzes Fell.' },
     'm3': { title: 'M3 · Zuchtbuch, Teil 2 (Würfe aus Verpaarungen der Welpen untereinander)', tag: 'Zuchtbuch (nachempfunden, Beispieldaten)', style: 'paper',
@@ -64,7 +66,7 @@ TRESOR.room({
   puzzles: {
     'probe-hyp-zahl': { id: 'probe-hyp-zahl', type: 'code', inputmode: 'numeric', title: 'Das Verhältnis in den Würfen',
       ref: { title: 'Zum Nachschlagen: M3 · Zuchtbuch, Teil 2', docs: ['m3'] },
-      prompt: 'Berechnet aus allen sechs Würfen von M3, wie viele kurzhaarige Welpen auf einen langhaarigen kommen (kurz geteilt durch lang, auf eine ganze Zahl gerundet), und tragt die Zahl ein.\n\nDie Eltern der sechs Würfe sind Welpen aus Teil 1.',
+      prompt: 'Berechnet aus allen sechs Würfen von M3 das Verhältnis kurzhaarig zu langhaarig (kurz geteilt durch lang) und tragt es auf eine ganze Zahl gerundet ein.\n\nDie Eltern der sechs Würfe sind Welpen aus Teil 1.',
       placeholder: 'Zahl', button: 'Prüfen',
       hash: ['038a73c1c362444ae7aeb35cb42bde18b45636b77fd084f1effbc59dbb516270', '8e16d88b40876b2b6292f2edf8b006e069ac50c9909d13713f4c3aea7fb81591', '65f0aa96cc714995560df38a6730f1221f787e1991e69634e45e5cf904046eef', 'f0ba5b7fd8d177f297052898e07fd9f6eff0700d3a1700f94115ac934d83f077'],
       wrongText: 'Nichts passiert. Gefragt ist kurz geteilt durch lang, für alle sechs Würfe zusammen.',
@@ -80,67 +82,76 @@ TRESOR.room({
       ref: { title: 'Zum Nachschlagen: M3 · Zuchtbuch, Teil 2', docs: ['m3'] },
       prompt: 'Wählt den Beleg, der die Hypothese H1 „Die Anlage ist verloren“ widerlegt.',
       cards: [
-        { id: 'b1', tag: 'B1', label: 'In den Würfen gibt es 9 langhaarige Welpen.' },
+        { id: 'b1', tag: 'B1', label: 'Obwohl alle Eltern kurzhaarig waren, gibt es 9 langhaarige Welpen.' },
         { id: 'b2', tag: 'B2', label: 'Die meisten Welpen sind kurzhaarig.' },
         { id: 'b3', tag: 'B3', label: 'Die Würfe sind unterschiedlich groß.' },
-        { id: 'b4', tag: 'B4', label: 'Alle Eltern waren kurzhaarig.' }
+        { id: 'b4', tag: 'B4', label: 'Alle Eltern waren kurzhaarig.' },
+        { id: 'b5', tag: 'B5', label: 'Langhaarige Welpen sind seltener als kurzhaarige.' }
       ],
       traps: [
         { id: 'b2', text: 'Nichts passiert. Dass die meisten kurzhaarig sind, hatten schon die ersten Würfe gezeigt.' },
-        { id: 'b4', text: 'Nichts passiert. Das sagt nichts darüber, was in den Eltern steckt.' }
+        { id: 'b4', text: 'Nichts passiert. Das sagt nichts darüber, was in den Eltern steckt.' },
+        { id: 'b5', text: 'Nichts passiert. Eine Häufigkeit sagt nicht, ob die Anlage verloren gegangen ist.' }
       ],
       hash: '2d018b69a95af2762206d3ad47704c228df31ada26653abafb3804bd427c0670',
-      wrongText: 'Nichts passiert. Sucht den Beleg, der etwas Neues zeigt, nicht das Bekannte.',
+      wrongText: 'Nichts passiert. Sucht den Beleg, der H1 nicht stehen lassen kann.',
       hints: ['Welche Hypothese kann ein langhaariger Welpe nicht stehen lassen?',
               'Sucht den Beleg, der etwas Neues zeigt, nicht das Bekannte.',
-              'Es geht um die langhaarigen Welpen.'],
-      rescue: 'QjEgd2lkZXJsZWd0IEgxLiBXZW5uIGRpZSBBbmxhZ2UgZsO8ciBsYW5nZXMgRmVsbCB2ZXJsb3JlbiB3w6RyZSwga8O2bm50ZSBlcyBrZWluZSBsYW5naGFhcmlnZW4gV2VscGVuIGdlYmVuLiBFcyBnaWJ0IGFiZXIgOS4=',
-      rescueTask: 'Schreibt auf, welche Hypothese ihr streicht und warum.',
-      onSolve: { message: { from: 'zuechter', text: 'Ich züchte seit 30 Jahren. Kurzes Fell ist stärker. Deshalb verschwinden langhaarige Welpen aus der Zucht. Euer Zuchtbuch muss falsch sein.' }, message2: { from: 'kemal', text: 'Der Züchter legt Einspruch ein. Prüft seine Sätze am Zuchtbuch, Teil 2.' },
-        wall: [{ id: 'w-h1', title: 'Hypothese H1 gestrichen', tag: 'Ergebnis', kind: 'ergebnis', text: 'H1 „Die Anlage ist verloren“ ist widerlegt: In den Würfen gibt es 9 langhaarige Welpen.' }], then: 'probe-einspruch-markup' } },
+              'Es geht um die langhaarigen Welpen, obwohl kein Elterntier langhaarig war.'],
+      rescue: 'QjEgd2lkZXJsZWd0IEgxLiBXw6RyZSBkaWUgQW5sYWdlIGbDvHIgbGFuZ2VzIEZlbGwgdmVybG9yZW4sIGvDtm5udGUgZXMga2VpbmUgbGFuZ2hhYXJpZ2VuIFdlbHBlbiBnZWJlbi4gRXMgZ2lidCBhYmVyIDksIG9id29obCBhbGxlIEVsdGVybiBrdXJ6aGFhcmlnIHdhcmVuLg==',
+      rescueTask: 'Schreibt auf, welche Hypothese ihr streicht und warum. Erklärt, warum B2 und B5 H1 nicht widerlegen.',
+      onSolve: { message: { from: 'zuechter', text: 'Ich züchte seit 30 Jahren. Kurzes Fell ist stärker, deshalb verschwinden langhaarige Welpen aus der Zucht. Außerdem sind langhaarige Hunde weniger gesund. In Ihren sechs Würfen sind die meisten Welpen kurzhaarig, und langhaarige sind deutlich seltener. Das beweist es.' }, message2: { from: 'kemal', text: 'Der Züchter legt Einspruch ein. Prüft jeden seiner Sätze an den Zahlen aus Teil 2.' },
+        wall: [{ id: 'w-h1', title: 'Hypothese H1 gestrichen', tag: 'Ergebnis', kind: 'ergebnis', text: 'H1 „Die Anlage ist verloren“ ist widerlegt: In den Würfen gibt es 9 langhaarige Welpen, obwohl alle Eltern kurzhaarig waren.' }], then: 'probe-einspruch-markup' } },
 
     'probe-einspruch-markup': { id: 'probe-einspruch-markup', type: 'markup', title: 'Der Einspruch',
       ref: { title: 'Zum Nachschlagen: M3 · Zuchtbuch, Teil 2', docs: ['m3'] },
-      prompt: 'Markiert im Einspruch den Satz, der den Daten in M3 widerspricht.',
-      passes: [{ id: 'wid', label: 'Widerspruch', tag: 'Widerspruch', hint: 'Dieser Satz passt nicht zu den Zahlen in M3.' }],
+      prompt: 'Prüft jeden Satz des Einspruchs an M3: Er wird durch M3 gestützt, durch M3 widerlegt oder lässt sich mit M3 nicht prüfen.',
+      passes: [{ id: 'ges', label: 'gestützt', tag: 'gestützt', hint: 'Die Zahlen in M3 passen zu diesem Satz.' },
+               { id: 'wid', label: 'widerlegt', tag: 'widerlegt', hint: 'Die Zahlen in M3 passen nicht zu diesem Satz.' },
+               { id: 'nic', label: 'nicht prüfbar', tag: 'nicht prüfbar', hint: 'M3 sagt dazu nichts.' }],
       segments: [
-        { id: 'z1', nr: 'S1', text: '„Ich züchte seit 30 Jahren.“' },
-        { id: 'z2', nr: 'S2', text: '„Kurzes Fell ist stärker.“' },
-        { id: 'z3', nr: 'S3', text: '„Deshalb verschwinden langhaarige Welpen aus der Zucht.“' },
-        { id: 'z4', nr: 'S4', text: '„Das Zuchtbuch muss falsch sein.“' }
+        { id: 'z4', nr: 'S1', text: '„Langhaarige Hunde sind außerdem weniger gesund.“' },
+        { id: 'z5', nr: 'S2', text: '„In den sechs Würfen sind die meisten Welpen kurzhaarig.“' },
+        { id: 'z2', nr: 'S3', text: '„Kurzes Fell ist stärker.“' },
+        { id: 'z3', nr: 'S4', text: '„Deshalb verschwinden langhaarige Welpen aus der Zucht.“' },
+        { id: 'z6', nr: 'S5', text: '„Langhaarige Welpen sind deutlich seltener als kurzhaarige.“' },
+        { id: 'z1', nr: 'S6', text: '„Ich züchte seit 30 Jahren.“' }
       ],
-      hash: '2770a933c78b22e305f7c146f17457d06fddf494b3232a81648261cfef35ac8b',
-      wrongText: 'Nichts passiert. Welcher Satz passt nicht zu den 9 langhaarigen Welpen?',
-      hints: ['Welcher Satz passt nicht zu den 9 langhaarigen Welpen?',
-              'Es geht um das, was mit den langhaarigen Welpen passiert.',
-              'Er beginnt mit „Deshalb“.'],
-      rescue: 'UzMgd2lkZXJzcHJpY2h0IGRlbiBEYXRlbjogSW4gTTMgZ2lidCBlcyA5IGxhbmdoYWFyaWdlIFdlbHBlbiwgc2llIHZlcnNjaHdpbmRlbiBhbHNvIG5pY2h0LiBTNCBpc3QgZWluZSBCZWhhdXB0dW5nLCBkaWUgbmljaHQgYmVsZWd0IHdpcmQuIFMyIHNhZ3QgZXR3YXMsIHdvenUgTTMgbmljaHRzIHNhZ3Qu',
-      rescueTask: 'Schreibt den Satz ab und nennt die Zahl aus M3, die ihm widerspricht.',
-      onSolve: { text: 'Der Satz ist markiert. Jetzt zeigt ihr, wo die Anlage geblieben ist.', then: 'probe-einspruch-skizze' } },
+      hash: 'c05e23c16478dc8b18f07b75c0042432a609620199b35d4737ce38261b4264f0',
+      passHash: { ges: '62d3cd656f20a909e17398afb9f8f24fc13cc6c6ac087eee79921d7b3fbd89f8', wid: 'cd3c53f42e95717078cf778522a7d73182eee385032e99e09123b34aa6800a4f', nic: '64bc1b36f517763fe4e443a1a3bf51db5540d00ed4ab7a91333325eca3a625a3' },
+      wrongText: 'Nichts passiert. Mindestens eine Zuordnung passt nicht.',
+      hints: ['Prüft jeden Satz an den Zahlen in M3: 31 kurzhaarige und 9 langhaarige Welpen.',
+              '„Häufiger“ ist nicht dasselbe wie „stärker“.',
+              'Ein Satz wird widerlegt, zwei werden gestützt, drei lassen sich mit M3 nicht prüfen.'],
+      rescue: 'R2VzdMO8dHp0IHdlcmRlbiBTMiAoMzEgdm9uIDQwIFdlbHBlbiBzaW5kIGt1cnpoYWFyaWcpIHVuZCBTNSAoOSB2b24gNDAgc2luZCBsYW5naGFhcmlnKS4gV2lkZXJsZWd0IHdpcmQgUzQ6IEluIE0zIGdpYnQgZXMgOSBsYW5naGFhcmlnZSBXZWxwZW4sIHNpZSB2ZXJzY2h3aW5kZW4gYWxzbyBuaWNodC4gTmljaHQgcHLDvGZiYXIgc2luZCBTMSAoR2VzdW5kaGVpdCksIFMzIChTdMOkcmtlKSB1bmQgUzYgKEVyZmFocnVuZyk6IE0zIHrDpGhsdCBudXIgRmVsbC4gSMOkdWZpZ2VyIGhlacOfdCBuaWNodCBzdMOkcmtlci4=',
+      rescueTask: 'Schreibt den widerlegten Satz ab und nennt die Zahl aus M3, die ihm widerspricht. Erklärt, warum „häufiger“ nicht „stärker“ bedeutet.',
+      onSolve: { text: 'Der Einspruch ist geprüft. Jetzt zeigt ihr mit dem Modell, wo die Anlage geblieben ist.', then: 'probe-einspruch-skizze' } },
 
     'probe-einspruch-skizze': { id: 'probe-einspruch-skizze', type: 'net', title: 'Wo ist die Anlage geblieben?',
-      prompt: 'Erklärt mit Pfeilen, wo die Anlage für langes Fell geblieben ist. Ein Pfeil zeigt, was woraus folgt.',
+      ref: { title: 'Zum Nachschlagen: M4 · Modellkarte', docs: ['m4'] },
+      prompt: 'Wendet das Modell aus M4 an: Erklärt mit Pfeilen, wie aus zwei kurzhaarigen Elterntieren ein langhaariger Welpe entstehen kann. Ein Pfeil zeigt, was woraus folgt.',
       items: [
-        { id: 'a', tag: 'A', label: 'kurzhaarige Eltern' },
-        { id: 'b', tag: 'B', label: 'Anlage für langes Fell' },
-        { id: 'c', tag: 'C', label: 'neuer Wurf' },
-        { id: 'd', tag: 'D', label: 'zwei Anlagen für langes Fell' },
-        { id: 'e', tag: 'E', label: 'langhaariger Welpe' },
-        { id: 'f', tag: 'F', label: 'Anlage verloren' },
-        { id: 'g', tag: 'G', label: 'Fell mischt sich' }
+        { id: 'a', tag: 'A', label: 'Elterntier 1: K und l (kurzes Fell)' },
+        { id: 'b', tag: 'B', label: 'Elterntier 2: K und l (kurzes Fell)' },
+        { id: 'c', tag: 'C', label: 'Elterntier 1 gibt l weiter' },
+        { id: 'd', tag: 'D', label: 'Elterntier 2 gibt l weiter' },
+        { id: 'e', tag: 'E', label: 'Welpe hat l und l' },
+        { id: 'f', tag: 'F', label: 'Welpe hat langes Fell' },
+        { id: 'g', tag: 'G', label: 'Anlage l ist verloren' },
+        { id: 'h', tag: 'H', label: 'Das Fell der Eltern mischt sich' }
       ],
-      slots: [[14, 18], [50, 18], [84, 18], [14, 82], [41, 82], [68, 82], [90, 50]], height: 400,
-      minEdges: 4, edgeCount: 4,
-      edgeHash: ['e256015ce9b391bc117a3a00c98f8d8b33e680a212dba52c3881a1fe31326ad3', '121b2c816ca7560566c0d9fdfde41917792f0a580984b527861ec8bfff68c737', 'cca76d0069d6aba55f9a982ccb4b9222c739b67ebfed3672d9409772e73e08f4', '3cd5881fb922bcc8b569a458cea2bf7c179c5afe7be4ac31b55918f1ec641ee8'],
-      hash: '773fc0af0919806a2c38a2595c5d17f800bc453ea92ee18cd316bedf82f99ad2',
-      wrongText: 'Nichts passiert. Wo war die Anlage in der ersten Generation?',
-      hints: ['Wo war die Anlage in der ersten Generation?',
-              'Die Anlage war da, aber man hat sie nicht gesehen.',
-              'Elternpaar, Anlage, neuer Wurf, zwei Anlagen, langhaariger Welpe: in dieser Reihenfolge.'],
-      rescue: 'RGllIGt1cnpoYWFyaWdlbiBFbHRlcm4gdHJhZ2VuIGRpZSBBbmxhZ2UgZsO8ciBsYW5nZXMgRmVsbCwgbWFuIHNpZWh0IHNpZSBuaWNodC4gSW0gbmV1ZW4gV3VyZiBrw7ZubmVuIHp3ZWkgQW5sYWdlbiBmw7xyIGxhbmdlcyBGZWxsIHp1c2FtbWVudHJlZmZlbi4gRGFubiBpc3QgZGVyIFdlbHBlIGxhbmdoYWFyaWcuIERpZSBLYXJ0ZW4g4oCeQW5sYWdlIHZlcmxvcmVu4oCcIHVuZCDigJ5GZWxsIG1pc2NodCBzaWNo4oCcIGdlaMO2cmVuIG5pY2h0IGRhenUu',
+      slots: [[16, 15], [16, 85], [50, 15], [50, 85], [84, 50], [50, 50], [16, 50], [84, 15]], height: 460,
+      minEdges: 5, edgeCount: 5,
+      edgeHash: ['78b825113091b3cf7a0c1c1f03dcc8648ef8daeb99f3904a8695017e903d91a1', '962dadcb0c9b3b91ce173097be56f1fb873249c58baf2e4367c8f5a360587698', 'e49eec27c04ddea38253694342ee453cd60505be0d0a234b2a9d5edc0fb51e56', '3cd5881fb922bcc8b569a458cea2bf7c179c5afe7be4ac31b55918f1ec641ee8', '78c8b509361839cf82a4d430eca867f3487977d0c222ecad2c8b6b51811bcd24'],
+      hash: '3e5a51524bdaacafe3ecbf3274f6663145e6e72657d489d769526b41adee32d7',
+      wrongText: 'Nichts passiert. Fragt: Was gibt jedes Elterntier weiter, und was entsteht daraus?',
+      hints: ['Beginnt bei den Elterntieren: Was gibt jedes von ihnen an den Welpen weiter?',
+              'Langes Fell zeigt ein Welpe nur, wenn er zweimal l hat.',
+              'In einer Karte laufen zwei Pfeile zusammen.'],
+      rescue: 'SmVkZXMgRWx0ZXJudGllciBoYXQgSyB1bmQgbCB1bmQgZ2lidCB6dWbDpGxsaWcgZWluZSBkZXIgYmVpZGVuIEFubGFnZW4gd2VpdGVyLiBHZWJlbiBiZWlkZSBsIHdlaXRlciwgaGF0IGRlciBXZWxwZSBsIHVuZCBsIHVuZCBkYW1pdCBsYW5nZXMgRmVsbC4gRGllIEthcnRlbiDigJ5BbmxhZ2UgbCBpc3QgdmVybG9yZW7igJwgdW5kIOKAnkRhcyBGZWxsIGRlciBFbHRlcm4gbWlzY2h0IHNpY2jigJwgZ2Vow7ZyZW4gbmljaHQgZGF6dS4=',
       rescueTask: 'Zeichnet die Skizze ins Logbuch und schreibt unter jeden Pfeil, was er bedeutet.',
       onSolve: { message: { from: 'kemal', text: 'Teil 3 des Gutachtens steht. Die Anlage war die ganze Zeit da. Man hat sie bei den kurzhaarigen Eltern nur nicht gesehen.\n\nDas hat vor rund 160 Jahren schon jemand bei Erbsen herausgefunden. Er war Mönch und hieß Gregor Mendel.\n\nTeil 4, eure Empfehlung an den Vorstand, schreibt ihr im Unterricht. Dort gebt ihr euren Regeln auch Namen.' },
         wall: [{ id: 'w-skizze', title: 'Wo die Anlage geblieben ist', tag: 'Ergebnis', kind: 'ergebnis',
-          text: 'kurzhaarige Eltern → Anlage für langes Fell → neuer Wurf → zwei Anlagen für langes Fell → langhaariger Welpe' }] } }
+          text: 'Beide Elterntiere: K und l, kurzes Fell. Jedes gibt l weiter. Welpe: l und l. Ergebnis: langes Fell.' }] } }
   }
 });

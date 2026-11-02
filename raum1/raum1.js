@@ -7,11 +7,11 @@
 TRESOR.room({
   base: '../',
   id: 'raum1',
-  version: 'Testraum Mendel V4 · Raum 1 · 01.11.2026',
+  version: 'Testraum Mendel V7 · Raum 1 · 01.11.2026',
   title: 'Das Vereinsbüro',
   subtitle: 'Genetik · Der Brief der Käuferin',
   image: '../bilder/buero.jpg',
-  imageAlt: 'Ein helles Vereinsbüro: links ein grüner Tisch mit einem Brief, in der Mitte ein roter Tisch mit einem aufgeschlagenen Zuchtbuch, an der Wand zwei Bilderrahmen, rechts eine Zimmerpflanze und ein gelber Sessel am Fenster.',
+  imageAlt: 'Ein nüchternes Büro: links ein dunkler Schreibtisch mit einem Blatt Papier und ein Regal, an der Wand zwei gerahmte Schwarzweißfotos, darunter ein niedriger Tisch mit aufgeschlagenem Buch, rechts ein grauer Sessel am Fenster.',
   size: [1024, 768],
   flashlight: false,
   unlockMode: 'auto',
@@ -29,19 +29,19 @@ TRESOR.room({
 
   missions: [
     { id: 'mendel-1', title: 'Mission 1 · Der Brief der Käuferin', unlock: '7794dcd432e29cbf025f430a0ddb233334c81dd3306b226d24b8878637f573c2',
-      intro: { from: 'kemal', text: 'Im Zuchtverein ist ein Brief angekommen. Eine Käuferin ist sicher, dass das Zuchtbuch falsch ist, und will, dass der Vorstand es ändert. Der Vorstand weiß nicht, wer recht hat. Deshalb bittet er euch um ein Gutachten, eine begründete Einschätzung.\n\nDas Gutachten hat vier Teile. Teil 1 und Teil 3 schreibt ihr im Spiel, Teil 2 und Teil 4 im Unterricht. Teil 1 lautet: Was behauptet die Käuferin, und was steht wirklich im Zuchtbuch?\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
+      intro: { from: 'kemal', text: 'Teil 1 des Gutachtens: Lest den Brief von Frau Sommer, prüft ihre Aussagen und wertet das Zuchtbuch aus.\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
       requires: ['probe-brief', 'probe-wuerfe-tabelle', 'probe-wuerfe-zahl'],
       doneTitle: 'Mission 1 abgeschlossen',
       doneText: 'Teil 1 des Gutachtens ist fertig. Das Zuchtbuch ist nicht widerlegt: Alle Welpen sind kurzhaarig, und keiner hat Fell mittlerer Länge. Ob die Anlage für langes Fell verloren ist, sagen die Zahlen aber nicht.\n\nZwei dieser Welpen wurden später verpaart, und im neuen Wurf ist einer mit langem Fell. In der nächsten Unterrichtsstunde schreibt ihr Teil 2: Welche Erklärungen sind denkbar?' }
   ],
 
   hotspots: [
-    { id: 'fotowand', label: 'Fotos der Elterntiere an der Wand', rect: [32.5, 15.5, 35, 25], action: { type: 'docs', title: 'Die Elterntiere', docs: ['foto-vater', 'foto-mutter'] } },
-    { id: 'brief', label: 'Pult mit dem Brief der Käuferin', rect: [0.5, 55, 26, 35], states: [
+    { id: 'fotowand', label: 'Fotos der Elterntiere an der Wand', rect: [33.5, 14.5, 33.5, 25.5], action: { type: 'docs', title: 'Die Elterntiere', docs: ['foto-vater', 'foto-mutter'] } },
+    { id: 'brief', label: 'Pult mit dem Brief der Käuferin', rect: [0, 53, 32.5, 47], states: [
       { if: { unlocked: 'mendel-1', notSolved: 'probe-brief' }, action: { type: 'puzzle', puzzle: 'probe-brief' } },
       { if: { solved: 'probe-brief' }, action: { type: 'docs', title: 'Auftrag, Brief, Foto und Begriffe', docs: ['auftrag', 'm1', 'foto-welpe', 'begriffe'] } },
       { action: { type: 'text', text: 'Auf dem Pult liegt ein Brief. Startet zuerst die Mission.' } } ] },
-    { id: 'zuchtbuch', label: 'Zuchtbuch, Teil 1', rect: [36, 71, 31.5, 27], states: [
+    { id: 'zuchtbuch', label: 'Zuchtbuch, Teil 1', rect: [35.5, 56, 30.5, 20.5], states: [
       { if: { solved: 'probe-brief', notSolved: 'probe-wuerfe-tabelle' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-tabelle' } },
       { if: { solved: 'probe-wuerfe-tabelle', notSolved: 'probe-wuerfe-zahl' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-zahl' } },
       { if: { solved: 'probe-wuerfe-zahl' }, action: { type: 'docs', title: 'Zuchtbuch, Teil 1', docs: ['m2', 'foto-wurf', 'foto-wurf-neu'] } },
@@ -51,8 +51,8 @@ TRESOR.room({
   docs: {
     'auftrag': { title: 'Auftrag des Vorstands', tag: 'Auftrag (nachempfunden)', style: 'paper',
       text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet die Käuferin, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Welche Erklärung halten die Daten aus, und was sagt der Züchter dazu?\nTeil 4 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
-    'm1': { title: 'M1 · Der Brief der Käuferin', tag: 'Brief (nachempfunden)', style: 'paper',
-      text: 'Von: Frau Sommer\nAn: den Vorstand des Zuchtvereins\n\nSehr geehrter Vorstand,\n\n„Mein Welpe hat kurzes Fell.“\n„Sein Vater ist langhaarig, seine Mutter kurzhaarig.“\n„Ihr Zuchtbuch muss falsch sein.“\n„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“\n„Die Welpen hätten Fell mittlerer Länge haben müssen.“\n\nFrau Sommer' },
+    'm1': { title: 'M1 · Der Brief von Frau Sommer', tag: 'Brief (nachempfunden)', style: 'paper',
+      text: 'Von: Frau Sommer\nAn: den Vorstand des Zuchtvereins\nBetreff: Rückforderung von 1.800 Euro\n\nSehr geehrter Vorstand,\n\n„Mein Welpe ist 12 Wochen alt und hat kurzes Fell.“\n„Laut Zuchtbuch ist sein Vater langhaarig, seine Mutter kurzhaarig.“\n„Auch die beiden Geschwister aus dem Wurf haben kurzes Fell.“\n„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“\n„Die Welpen hätten Fell mittlerer Länge haben müssen.“\n„Bei anderen Züchtern kommt so etwas nie vor.“\n„Ihr Zuchtbuch muss falsch sein.“\n„Der Verein hat mich getäuscht.“\n\nFrau Sommer' },
     'foto-welpe': { title: 'Foto: der Welpe der Käuferin', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/welpe-kurz.jpg',
       text: 'Der Welpe der Käuferin, etwa 10 Wochen alt.' },
     'foto-vater': { title: 'Foto: der Vater', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/dackel-lang.jpg',
@@ -73,28 +73,31 @@ TRESOR.room({
   puzzles: {
     'probe-brief': { id: 'probe-brief', type: 'markup', title: 'Der Brief',
       ref: { title: 'Zum Nachschlagen: Begriffskarte', docs: ['begriffe'] },
-      prompt: 'Lest den Brief M1. Markiert jeden Satz als Beobachtung, Deutung oder Behauptung.',
-      passes: [{ id: 'beo', label: 'Beobachtung', tag: 'Beobachtung', hint: 'Das kann man sehen oder messen.' },
-               { id: 'deu', label: 'Deutung', tag: 'Deutung', hint: 'Die Käuferin erklärt, warum etwas so ist.' },
+      prompt: 'Lest den Brief M1. Ordnet jeden Satz zu: Beobachtung, Deutung oder Behauptung.',
+      passes: [{ id: 'beo', label: 'Beobachtung', tag: 'Beobachtung', hint: 'Das lässt sich am Welpen oder im Zuchtbuch nachprüfen.' },
+               { id: 'deu', label: 'Deutung', tag: 'Deutung', hint: 'Frau Sommer erklärt, warum etwas so ist.' },
                { id: 'beh', label: 'Behauptung', tag: 'Behauptung', hint: 'Sie sagt etwas, ohne einen Beleg zu nennen.' }],
       segments: [
-        { id: 'b3', nr: 'S1', text: '„Ihr Zuchtbuch muss falsch sein.“' },
-        { id: 'b1', nr: 'S2', text: '„Mein Welpe hat kurzes Fell.“' },
+        { id: 'b6', nr: 'S1', text: '„Ihr Zuchtbuch muss falsch sein.“' },
+        { id: 'b3', nr: 'S2', text: '„Auch die beiden Geschwister aus dem Wurf haben kurzes Fell.“' },
         { id: 'b5', nr: 'S3', text: '„Die Welpen hätten Fell mittlerer Länge haben müssen.“' },
-        { id: 'b2', nr: 'S4', text: '„Sein Vater ist langhaarig, seine Mutter kurzhaarig.“' },
-        { id: 'b4', nr: 'S5', text: '„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“' }
+        { id: 'b8', nr: 'S4', text: '„Der Verein hat mich getäuscht.“' },
+        { id: 'b1', nr: 'S5', text: '„Mein Welpe ist 12 Wochen alt und hat kurzes Fell.“' },
+        { id: 'b4', nr: 'S6', text: '„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“' },
+        { id: 'b7', nr: 'S7', text: '„Bei anderen Züchtern kommt so etwas nie vor.“' },
+        { id: 'b2', nr: 'S8', text: '„Laut Zuchtbuch ist sein Vater langhaarig, seine Mutter kurzhaarig.“' }
       ],
-      hash: 'afd7965242c46231c1b3c9dd2b1e5544466f12e648d924b1796566d94d0ea72c',
-      passHash: { beo: '177dd9332cacec81f80da6c0649326a5fa66f3eb93543cef6ebc4f19ceb7a115', deu: '1dc00e1ec77196ba0635df61d68a55dad6b183e94721f607732ccd53f68f29be', beh: 'd7405b36d2d2754aa03f812f5d6466312a7393d16ef5591929826d7d75a95cac' },
-      wrongText: 'Nichts passiert. Mindestens eine Markierung passt nicht.',
-      hints: ['Trennt, was man sehen kann, von dem, was jemand daraus schließt.',
-              'Eine Behauptung nennt keinen Beleg.',
-              'Fragt bei jedem Satz: Könnte das so im Zuchtbuch stehen?'],
-      rescue: 'QmVvYmFjaHR1bmdlbiBzaW5kIFMyIHVuZCBTNCwgZGVubiBzaWUgYmVzY2hyZWliZW4sIHdhcyBtYW4gc2llaHQuIERldXR1bmdlbiBzaW5kIFMzIHVuZCBTNSwgZGVubiBzaWUgZXJrbMOkcmVuLCB3YXJ1bSBldHdhcyBzbyBpc3QuIFMxIGlzdCBlaW5lIEJlaGF1cHR1bmc6IEVzIHN0ZWh0IG51ciBkYSwgd2FzIGRpZSBLw6R1ZmVyaW4gZ2xhdWJ0LCBvaG5lIGVpbmVuIEJlbGVnLg==',
-      rescueTask: 'Schreibt die fünf Sätze ins Logbuch und setzt vor jeden B, D oder H.',
-      onSolve: { message: { from: 'kemal', text: 'Prüfen wir, was wirklich im Buch steht.' },
-        wall: [{ id: 'w-brief', title: 'Der Brief, getypt', tag: 'Ergebnis', kind: 'ergebnis',
-          text: 'Beobachtung: Der Welpe hat kurzes Fell. Vater langhaarig, Mutter kurzhaarig.\nDeutung: Das lange Fell wurde nicht weitergegeben. Es hätte Fell mittlerer Länge geben müssen.\nBehauptung: Das Zuchtbuch muss falsch sein.' }], then: 'probe-wuerfe-tabelle' } },
+      hash: '9f3f0ac05d05f64820a90b247d5f5836211944e54a3c931ec7bc910c2a90512e',
+      passHash: { beo: 'f0889e00a9808ce785bca0699cd5aff01a734e644daf7d2721f82b9eb8023763', deu: '1dc00e1ec77196ba0635df61d68a55dad6b183e94721f607732ccd53f68f29be', beh: 'b5db2c3e50871dfa32a6e08d33a4f83270db9cb2fc19c26a72cf958aeae9a87f' },
+      wrongText: 'Nichts passiert. Mindestens eine Zuordnung passt nicht.',
+      hints: ['Prüft bei jedem Satz: Lässt sich das am Welpen oder im Zuchtbuch nachprüfen?',
+              'Eine Deutung erklärt, warum etwas so ist. Eine Behauptung nennt keinen Beleg.',
+              'Es sind drei Beobachtungen, zwei Deutungen und drei Behauptungen.'],
+      rescue: 'QmVvYmFjaHR1bmdlbiBzaW5kIFMyLCBTNSB1bmQgUzg6IFNpZSBsYXNzZW4gc2ljaCBuYWNocHLDvGZlbi4gRGV1dHVuZ2VuIHNpbmQgUzMgdW5kIFM2OiBTaWUgZXJrbMOkcmVuLCB3YXJ1bSBldHdhcyBzbyBpc3QuIEJlaGF1cHR1bmdlbiBzaW5kIFMxLCBTNCB1bmQgUzc6IEVzIHdpcmQgZXR3YXMgZ2VzYWd0LCBhYmVyIGtlaW4gQmVsZWcgZ2VuYW5udC4=',
+      rescueTask: 'Schreibt die acht Sätze ins Logbuch und setzt vor jeden B (Beobachtung), D (Deutung) oder H (Behauptung). Begründet je einen Satz.',
+      onSolve: { message: { from: 'kemal', text: 'Frau Sommer hat drei Dinge gesehen, zwei erklärt und drei behauptet. Prüfen wir, was wirklich im Zuchtbuch steht.' },
+        wall: [{ id: 'w-brief', title: 'Der Brief, getrennt', tag: 'Ergebnis', kind: 'ergebnis',
+          text: 'Beobachtung: Welpe kurzhaarig, Vater langhaarig, Mutter kurzhaarig, Geschwister kurzhaarig.\nDeutung: Das lange Fell wurde nicht weitergegeben. Es hätte mittlere Länge geben müssen.\nBehauptung: Das Zuchtbuch ist falsch. Bei anderen Züchtern passiert das nie. Der Verein hat getäuscht.' }], then: 'probe-wuerfe-tabelle' } },
 
     'probe-wuerfe-tabelle': { id: 'probe-wuerfe-tabelle', type: 'tabelle', title: 'Was sagen die Würfe wirklich?',
       ref: { title: 'Zum Nachschlagen: M2 · Zuchtbuch, Teil 1', docs: ['m2'] },
@@ -118,13 +121,13 @@ TRESOR.room({
 
     'probe-wuerfe-zahl': { id: 'probe-wuerfe-zahl', type: 'code', inputmode: 'numeric', title: 'Wie viele langhaarig?',
       ref: { title: 'Zum Nachschlagen: M2 · Zuchtbuch, Teil 1', docs: ['m2'] },
-      prompt: 'Bestimmt aus M2, wie viele der 24 Welpen langes Fell haben, und tragt die Zahl ein.',
+      prompt: 'Bestimmt aus M2 den Anteil der langhaarigen Welpen an allen 24 Welpen in Prozent und tragt die Zahl ein.',
       placeholder: 'Zahl', button: 'Prüfen',
       hash: ['df71ce003180134461c721067e82d9570034abbc20cc76094facd4f1b264967b', '43684825781784a6c2aa2703d02dd78f42c4d475b15116f19265544115568f14'],
-      wrongText: 'Nichts passiert. Zählt in der Spalte „Welpen langhaarig“.',
-      hints: ['Lest die Spalte „Welpen langhaarig“.', 'Zählt die Zahlen in dieser Spalte zusammen.', 'Es sind drei Würfe mit jeweils derselben Zahl.'],
-      rescue: 'SW4gYWxsZW4gZHJlaSBXw7xyZmVuIHN0ZWh0IGluIGRlciBTcGFsdGUg4oCeV2VscGVuIGxhbmdoYWFyaWfigJwgZGllIFphaGwgMC4gVm9uIDI0IFdlbHBlbiBoYXQgYWxzbyBrZWluZXIgbGFuZ2VzIEZlbGwu',
-      rescueTask: 'Schreibt die Rechnung ins Logbuch.',
+      wrongText: 'Nichts passiert. Gesucht ist ein Anteil in Prozent, bezogen auf alle 24 Welpen.',
+      hints: ['Lest die Spalte „Welpen langhaarig“.', 'Zählt die Zahlen in dieser Spalte zusammen und setzt sie ins Verhältnis zu 24.', 'Es sind drei Würfe mit derselben Zahl.'],
+      rescue: 'SW4gYWxsZW4gZHJlaSBXw7xyZmVuIHN0ZWh0IGluIGRlciBTcGFsdGUg4oCeV2VscGVuIGxhbmdoYWFyaWfigJwgZGllIFphaGwgMC4gVm9uIDI0IFdlbHBlbiBoYXQgYWxzbyBrZWluZXIgbGFuZ2VzIEZlbGwsIGRlciBBbnRlaWwgYmV0csOkZ3QgMCBQcm96ZW50Lg==',
+      rescueTask: 'Schreibt die Rechnung ins Logbuch und erklärt, was 0 Prozent für Aussage C bedeutet und was nicht.',
       onSolve: { message: { from: 'kemal', text: 'Teil 1 steht. Zwei dieser Welpen wurden später verpaart, und im neuen Wurf ist ein Welpe mit langem Fell. Wo kommt das lange Fell her? Darüber schreibt ihr im Unterricht Teil 2.' },
         wall: [{ id: 'w-zahl', title: 'Welpen mit langem Fell in Teil 1', tag: 'Ergebnis', kind: 'ergebnis', text: '0 von 24 Welpen sind langhaarig.\n\nIm neuen Wurf der verpaarten Welpen ist ein langhaariger Welpe.' }] } },
   }
