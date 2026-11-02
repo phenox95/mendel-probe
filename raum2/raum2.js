@@ -7,7 +7,7 @@
 TRESOR.room({
   base: '../',
   id: 'raum2',
-  version: 'Testraum Mendel V3 · Raum 2 · 01.11.2026',
+  version: 'Testraum Mendel V4 · Raum 2 · 01.11.2026',
   title: 'Die Zwinger-Stube',
   subtitle: 'Genetik · Der Einspruch des Züchters',
   image: '../bilder/stube.jpg',
@@ -24,14 +24,14 @@ TRESOR.room({
     return t;
   },
 
-  end: { title: 'Gutachten abgeschlossen', text: 'Sichert jetzt euren Spielstand. In der Präsenzstunde gebt ihr euren Regeln Namen.' },
+  end: { title: 'Teil 3 des Gutachtens fertig', text: 'Sichert jetzt euren Spielstand. Im Unterricht schreibt ihr Teil 4, die Empfehlung an den Vorstand, und gebt euren Regeln Namen.' },
 
   missions: [
     { id: 'mendel-2', title: 'Mission 2 · Der Einspruch des Züchters', unlock: 'a288344dcdd1700dc9fa508bb526e866679d864a8867162a1df62a45c387b304',
-      intro: { from: 'kemal', text: 'Eure Hypothesen liegen auf Papier. Jetzt entscheidet das Zuchtbuch, Teil 2: sechs Würfe aus Verpaarungen der Welpen untereinander. Danach meldet sich ein Züchter.' },
+      intro: { from: 'kemal', text: 'Willkommen zurück. Teil 2 des Gutachtens habt ihr im Unterricht geschrieben: Hypothesen und ein Münzmodell. Jetzt kommt Teil 3: Welche Erklärung halten die Daten aus?\n\nDas Zuchtbuch, Teil 2, enthält sechs Würfe. Die Eltern dieser Würfe sind Welpen aus Teil 1. Danach meldet sich ein Züchter und widerspricht.\n\nHabt ihr eure Hypothesen und die Klassensumme aus dem Münzwurf im Logbuch? Dann könnt ihr starten.' },
       requires: ['probe-hyp-zahl', 'probe-hyp-beleg', 'probe-einspruch-markup', 'probe-einspruch-skizze'],
       doneTitle: 'Mission 2 abgeschlossen · Gutachten fertig',
-      doneText: 'Die Anlage für langes Fell war die ganze Zeit da. Man hat sie bei den Eltern und den Welpen nur nicht gesehen.\n\nSchreibt die Skizze mit den Pfeilen und eure Erklärung in euer Logbuch.' }
+      doneText: 'Teil 3 des Gutachtens ist fertig. Die Daten halten nur eine Erklärung aus: Die Anlage für langes Fell war die ganze Zeit da. Man hat sie bei den kurzhaarigen Eltern nur nicht gesehen.\n\nSchreibt die Skizze mit den Pfeilen und eure Erklärung in euer Logbuch. Teil 4 folgt im Unterricht.' }
   ],
 
   hotspots: [
@@ -41,7 +41,7 @@ TRESOR.room({
       { if: { unlocked: 'mendel-2' }, action: { type: 'doc', doc: 'm3' } },
       { action: { type: 'text', text: 'Im Regal steht ein zweites Zuchtbuch. Startet zuerst die Mission.' } } ] },
     { id: 'wurfkiste', label: 'Wurfkiste', rect: [33.5, 64, 34.5, 26], states: [
-      { if: { unlocked: 'mendel-2' }, action: { type: 'doc', doc: 'foto-wurf-neu' } },
+      { if: { unlocked: 'mendel-2' }, action: { type: 'docs', title: 'Wurfkiste, Auftrag und Begriffe', docs: ['foto-wurf-neu', 'auftrag', 'begriffe'] } },
       { action: { type: 'text', text: 'Eine Wurfkiste mit Welpen. Startet zuerst die Mission.' } } ] },
     { id: 'zuechter', label: 'Pult des Züchters', rect: [74.5, 56, 25, 34], states: [
       { if: { unlocked: 'mendel-2', solved: 'probe-hyp-beleg', notSolved: 'probe-einspruch-markup' }, action: { type: 'puzzle', puzzle: 'probe-einspruch-markup' } },
@@ -50,6 +50,10 @@ TRESOR.room({
   ],
 
   docs: {
+    'auftrag': { title: 'Auftrag des Vorstands', tag: 'Auftrag (nachempfunden)', style: 'paper',
+      text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet die Käuferin, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Welche Erklärung halten die Daten aus, und was sagt der Züchter dazu?\nTeil 4 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
+    'begriffe': { title: 'Begriffskarte', tag: 'Karte', style: 'paper',
+      text: 'Behauptung: Jemand sagt etwas, ohne einen Beleg zu nennen.\nBeobachtung: Man kann es sehen oder messen.\nDeutung: Eine Erklärung dafür, warum etwas so ist.\nHypothese: Eine Vermutung, die man prüfen kann.\nAnlage: Das, was in einem Tier festlegt, welches Fell es bekommt. Den Fachbegriff dafür lernt ihr später.\nGutachten: Eine begründete Einschätzung für den Vorstand.' },
     'foto-wurf-neu': { title: 'Foto: der neue Wurf', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/wurf-gemischt.jpg',
       text: 'Zwei Welpen aus Teil 1 wurden verpaart. Im neuen Wurf ist ein Welpe mit langem Fell. Die Elterntiere haben beide kurzes Fell.' },
     'm3': { title: 'M3 · Zuchtbuch, Teil 2 (Würfe aus Verpaarungen der Welpen untereinander)', tag: 'Zuchtbuch (nachempfunden, Beispieldaten)', style: 'paper',
@@ -69,7 +73,7 @@ TRESOR.room({
               '31 kurzhaarige und 9 langhaarige Welpen. Das Ergebnis liegt knapp über 3.'],
       rescue: 'WnVzYW1tZW4gc2luZCBlcyAzMSBrdXJ6aGFhcmlnZSB1bmQgOSBsYW5naGFhcmlnZSBXZWxwZW4uIDMxIGdldGVpbHQgZHVyY2ggOSBzaW5kIGV0d2EgMyw0LCBnZXJ1bmRldCAzLg==',
       rescueTask: 'Rechnet im Logbuch und schreibt das Ergebnis auf.',
-      onSolve: { text: 'Die Zahl hängt an der Sammelwand.',
+      onSolve: { text: 'Die Zahl hängt an der Sammelwand. Vergleicht sie mit der Klassensumme aus eurem Münzwurf und notiert beide im Logbuch.',
         wall: [{ id: 'w-hyp-zahl', title: 'Verhältnis in Teil 2', tag: 'Ergebnis', kind: 'ergebnis', text: '31 kurzhaarige und 9 langhaarige Welpen. Auf einen langhaarigen kommen etwa 3 kurzhaarige.' }], then: 'probe-hyp-beleg' } },
 
     'probe-hyp-beleg': { id: 'probe-hyp-beleg', type: 'pick', count: 1, title: 'Welche Hypothese fällt?',
@@ -135,7 +139,7 @@ TRESOR.room({
               'Elternpaar, Anlage, neuer Wurf, zwei Anlagen, langhaariger Welpe: in dieser Reihenfolge.'],
       rescue: 'RGllIGt1cnpoYWFyaWdlbiBFbHRlcm4gdHJhZ2VuIGRpZSBBbmxhZ2UgZsO8ciBsYW5nZXMgRmVsbCwgbWFuIHNpZWh0IHNpZSBuaWNodC4gSW0gbmV1ZW4gV3VyZiBrw7ZubmVuIHp3ZWkgQW5sYWdlbiBmw7xyIGxhbmdlcyBGZWxsIHp1c2FtbWVudHJlZmZlbi4gRGFubiBpc3QgZGVyIFdlbHBlIGxhbmdoYWFyaWcuIERpZSBLYXJ0ZW4g4oCeQW5sYWdlIHZlcmxvcmVu4oCcIHVuZCDigJ5GZWxsIG1pc2NodCBzaWNo4oCcIGdlaMO2cmVuIG5pY2h0IGRhenUu',
       rescueTask: 'Zeichnet die Skizze ins Logbuch und schreibt unter jeden Pfeil, was er bedeutet.',
-      onSolve: { message: { from: 'kemal', text: 'Das hat vor rund 160 Jahren schon jemand bei Erbsen herausgefunden. Er war Mönch und hieß Gregor Mendel.\n\nIn der nächsten Stunde gebt ihr euren Regeln Namen.' },
+      onSolve: { message: { from: 'kemal', text: 'Teil 3 des Gutachtens steht. Die Anlage war die ganze Zeit da. Man hat sie bei den kurzhaarigen Eltern nur nicht gesehen.\n\nDas hat vor rund 160 Jahren schon jemand bei Erbsen herausgefunden. Er war Mönch und hieß Gregor Mendel.\n\nTeil 4, eure Empfehlung an den Vorstand, schreibt ihr im Unterricht. Dort gebt ihr euren Regeln auch Namen.' },
         wall: [{ id: 'w-skizze', title: 'Wo die Anlage geblieben ist', tag: 'Ergebnis', kind: 'ergebnis',
           text: 'kurzhaarige Eltern → Anlage für langes Fell → neuer Wurf → zwei Anlagen für langes Fell → langhaariger Welpe' }] } }
   }

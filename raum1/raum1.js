@@ -7,7 +7,7 @@
 TRESOR.room({
   base: '../',
   id: 'raum1',
-  version: 'Testraum Mendel V3 · Raum 1 · 01.11.2026',
+  version: 'Testraum Mendel V4 · Raum 1 · 01.11.2026',
   title: 'Das Vereinsbüro',
   subtitle: 'Genetik · Der Brief der Käuferin',
   image: '../bilder/buero.jpg',
@@ -25,43 +25,47 @@ TRESOR.room({
     return t;
   },
 
-  end: { title: 'Raum 1 geschafft', text: 'Sichert jetzt euren Spielstand. In der Präsenzstunde formuliert ihr Hypothesen. Danach geht es im zweiten Raum weiter.' },
+  end: { title: 'Teil 1 des Gutachtens fertig', text: 'Sichert jetzt euren Spielstand. Teil 2 schreibt ihr im Unterricht: Hypothesen und ein Münzmodell. Danach geht es im zweiten Raum weiter.' },
 
   missions: [
     { id: 'mendel-1', title: 'Mission 1 · Der Brief der Käuferin', unlock: '7794dcd432e29cbf025f430a0ddb233334c81dd3306b226d24b8878637f573c2',
-      intro: { from: 'kemal', text: 'Im Verein ist ein Brief angekommen. Eine Käuferin ist sicher, dass ihr Zuchtbuch falsch ist. Lest ihren Brief und prüft dann, was im Zuchtbuch wirklich steht.\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
+      intro: { from: 'kemal', text: 'Im Zuchtverein ist ein Brief angekommen. Eine Käuferin ist sicher, dass das Zuchtbuch falsch ist, und will, dass der Vorstand es ändert. Der Vorstand weiß nicht, wer recht hat. Deshalb bittet er euch um ein Gutachten, eine begründete Einschätzung.\n\nDas Gutachten hat vier Teile. Teil 1 und Teil 3 schreibt ihr im Spiel, Teil 2 und Teil 4 im Unterricht. Teil 1 lautet: Was behauptet die Käuferin, und was steht wirklich im Zuchtbuch?\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
       requires: ['probe-brief', 'probe-wuerfe-tabelle', 'probe-wuerfe-zahl'],
       doneTitle: 'Mission 1 abgeschlossen',
-      doneText: 'Ihr habt den Brief geprüft und das Zuchtbuch ausgewertet. In den Würfen der Käuferin gibt es keinen langhaarigen Welpen. Zwei dieser Welpen wurden verpaart, und im neuen Wurf ist einer mit langem Fell.\n\nIn der Präsenzstunde formuliert ihr dazu eigene Hypothesen.' }
+      doneText: 'Teil 1 des Gutachtens ist fertig. Das Zuchtbuch ist nicht widerlegt: Alle Welpen sind kurzhaarig, und keiner hat Fell mittlerer Länge. Ob die Anlage für langes Fell verloren ist, sagen die Zahlen aber nicht.\n\nZwei dieser Welpen wurden später verpaart, und im neuen Wurf ist einer mit langem Fell. In der nächsten Unterrichtsstunde schreibt ihr Teil 2: Welche Erklärungen sind denkbar?' }
   ],
 
   hotspots: [
     { id: 'fotowand', label: 'Fotos der Elterntiere an der Wand', rect: [32.5, 15.5, 35, 25], action: { type: 'docs', title: 'Die Elterntiere', docs: ['foto-vater', 'foto-mutter'] } },
     { id: 'brief', label: 'Pult mit dem Brief der Käuferin', rect: [0.5, 55, 26, 35], states: [
       { if: { unlocked: 'mendel-1', notSolved: 'probe-brief' }, action: { type: 'puzzle', puzzle: 'probe-brief' } },
-      { if: { solved: 'probe-brief' }, action: { type: 'docs', title: 'Brief, Foto und Begriffe', docs: ['m1', 'foto-welpe', 'begriffe'] } },
+      { if: { solved: 'probe-brief' }, action: { type: 'docs', title: 'Auftrag, Brief, Foto und Begriffe', docs: ['auftrag', 'm1', 'foto-welpe', 'begriffe'] } },
       { action: { type: 'text', text: 'Auf dem Pult liegt ein Brief. Startet zuerst die Mission.' } } ] },
     { id: 'zuchtbuch', label: 'Zuchtbuch, Teil 1', rect: [36, 71, 31.5, 27], states: [
       { if: { solved: 'probe-brief', notSolved: 'probe-wuerfe-tabelle' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-tabelle' } },
       { if: { solved: 'probe-wuerfe-tabelle', notSolved: 'probe-wuerfe-zahl' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-zahl' } },
-      { if: { solved: 'probe-wuerfe-zahl' }, action: { type: 'docs', title: 'Zuchtbuch, Teil 1', docs: ['m2', 'foto-wurf'] } },
+      { if: { solved: 'probe-wuerfe-zahl' }, action: { type: 'docs', title: 'Zuchtbuch, Teil 1', docs: ['m2', 'foto-wurf', 'foto-wurf-neu'] } },
       { action: { type: 'text', text: 'Das Zuchtbuch ist zugeklappt. Lest zuerst den Brief der Käuferin und prüft ihn.' } } ] }
   ],
 
   docs: {
+    'auftrag': { title: 'Auftrag des Vorstands', tag: 'Auftrag (nachempfunden)', style: 'paper',
+      text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet die Käuferin, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Welche Erklärung halten die Daten aus, und was sagt der Züchter dazu?\nTeil 4 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
     'm1': { title: 'M1 · Der Brief der Käuferin', tag: 'Brief (nachempfunden)', style: 'paper',
-      text: 'Sehr geehrter Zuchtverein,\n\n„Mein Welpe hat kurzes Fell.“\n„Sein Vater ist langhaarig, seine Mutter kurzhaarig.“\n„Ihr Zuchtbuch muss falsch sein.“\n„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“\n„Die Welpen hätten Fell mittlerer Länge haben müssen.“' },
+      text: 'Von: Frau Sommer\nAn: den Vorstand des Zuchtvereins\n\nSehr geehrter Vorstand,\n\n„Mein Welpe hat kurzes Fell.“\n„Sein Vater ist langhaarig, seine Mutter kurzhaarig.“\n„Ihr Zuchtbuch muss falsch sein.“\n„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“\n„Die Welpen hätten Fell mittlerer Länge haben müssen.“\n\nFrau Sommer' },
     'foto-welpe': { title: 'Foto: der Welpe der Käuferin', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/welpe-kurz.jpg',
       text: 'Der Welpe der Käuferin, etwa 10 Wochen alt.' },
     'foto-vater': { title: 'Foto: der Vater', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/dackel-lang.jpg',
-      text: 'Der Vater des Welpen. Er stammt aus einer reinen Zuchtlinie: zehn Generationen nur langhaarig. Ein Gentest bestätigt: Er ist reinerbig.' },
+      text: 'Der Vater des Welpen. Er stammt aus einer reinen Zuchtlinie: zehn Generationen nur langhaarig. Ein Gentest bestätigt: In ihm steckt nur die Anlage für langes Fell.' },
     'foto-mutter': { title: 'Foto: die Mutter', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/dackel-kurz.jpg',
-      text: 'Die Mutter des Welpen. Sie stammt aus einer reinen Zuchtlinie: zehn Generationen nur kurzhaarig. Ein Gentest bestätigt: Sie ist reinerbig.' },
+      text: 'Die Mutter des Welpen. Sie stammt aus einer reinen Zuchtlinie: zehn Generationen nur kurzhaarig. Ein Gentest bestätigt: In ihr steckt nur die Anlage für kurzes Fell.' },
     'begriffe': { title: 'Begriffskarte', tag: 'Karte', style: 'paper',
-      text: 'Behauptung: Jemand sagt etwas, ohne einen Beleg zu nennen.\nBeobachtung: Man kann es sehen oder messen.\nDeutung: Eine Erklärung dafür, warum etwas so ist.\nHypothese: Eine Vermutung, die man prüfen kann.' },
+      text: 'Behauptung: Jemand sagt etwas, ohne einen Beleg zu nennen.\nBeobachtung: Man kann es sehen oder messen.\nDeutung: Eine Erklärung dafür, warum etwas so ist.\nHypothese: Eine Vermutung, die man prüfen kann.\nAnlage: Das, was in einem Tier festlegt, welches Fell es bekommt. Den Fachbegriff dafür lernt ihr später.\nGutachten: Eine begründete Einschätzung für den Vorstand.' },
     'm2': { title: 'M2 · Zuchtbuch, Teil 1 (Würfe der Käuferin)', tag: 'Zuchtbuch (nachempfunden, Beispieldaten)', style: 'paper',
-      text: 'Die Eltern stammen aus reinen Zuchtlinien: je zehn Generationen nur kurzhaarig bzw. nur langhaarig. Ein Gentest bestätigt: Beide Elterntiere sind reinerbig.\n\nBeispieldaten, für dieses Spiel nachempfunden.',
+      text: 'Die Eltern stammen aus reinen Zuchtlinien: je zehn Generationen nur kurzhaarig bzw. nur langhaarig. Ein Gentest bestätigt: In den Elterntieren steckt nur die Anlage für ihre eigene Fellart.\n\nBeispieldaten, für dieses Spiel nachempfunden.',
       table: { head: ['Wurf', 'Welpen kurzhaarig', 'Welpen langhaarig'], rows: [['1', '8', '0'], ['2', '9', '0'], ['3', '7', '0']] } },
+    'foto-wurf-neu': { title: 'Foto: der neue Wurf', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/wurf-gemischt.jpg',
+      text: 'Zwei Welpen aus Teil 1 wurden verpaart. Im neuen Wurf ist ein Welpe mit langem Fell. Die Elterntiere haben beide kurzes Fell.' },
     'foto-wurf': { title: 'Foto: ein Wurf aus Teil 1', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/wurf-kurz.jpg',
       text: 'Ein Wurf aus dem Zuchtbuch, Teil 1. Alle Welpen haben kurzes Fell.' }
   },
@@ -121,7 +125,7 @@ TRESOR.room({
       hints: ['Lest die Spalte „Welpen langhaarig“.', 'Zählt die Zahlen in dieser Spalte zusammen.', 'Es sind drei Würfe mit jeweils derselben Zahl.'],
       rescue: 'SW4gYWxsZW4gZHJlaSBXw7xyZmVuIHN0ZWh0IGluIGRlciBTcGFsdGUg4oCeV2VscGVuIGxhbmdoYWFyaWfigJwgZGllIFphaGwgMC4gVm9uIDI0IFdlbHBlbiBoYXQgYWxzbyBrZWluZXIgbGFuZ2VzIEZlbGwu',
       rescueTask: 'Schreibt die Rechnung ins Logbuch.',
-      onSolve: { message: { from: 'kemal', text: 'Zwei dieser Welpen wurden verpaart. Im neuen Wurf ist ein langhaariger Welpe. Wo kommt der her? Das klärt ihr im zweiten Raum.' },
+      onSolve: { message: { from: 'kemal', text: 'Teil 1 steht. Zwei dieser Welpen wurden später verpaart, und im neuen Wurf ist ein Welpe mit langem Fell. Wo kommt das lange Fell her? Darüber schreibt ihr im Unterricht Teil 2.' },
         wall: [{ id: 'w-zahl', title: 'Welpen mit langem Fell in Teil 1', tag: 'Ergebnis', kind: 'ergebnis', text: '0 von 24 Welpen sind langhaarig.\n\nIm neuen Wurf der verpaarten Welpen ist ein langhaariger Welpe.' }] } },
   }
 });
