@@ -17,7 +17,8 @@
   var REGISTRY = [
     'mendel-1', 'mendel-2',
     'probe-brief', 'probe-wuerfe-tabelle', 'probe-wuerfe-zahl',
-    'probe-hyp-zahl', 'probe-hyp-beleg', 'probe-einspruch-markup', 'probe-einspruch-skizze'
+    'probe-hyp-zahl', 'probe-hyp-beleg', 'probe-einspruch-markup', 'probe-einspruch-skizze',
+    'probe-vererbung', 'mendel-3', 'lab-versuch1', 'lab-aussage1', 'lab-versuch2', 'lab-aussage2', 'lab-versuch3', 'lab-aussage3'
   ];
 
   /* ---------------- Hilfsfunktionen ---------------- */

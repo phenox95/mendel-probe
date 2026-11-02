@@ -7,7 +7,7 @@
 TRESOR.room({
   base: '../',
   id: 'raum1',
-  version: 'Testraum Mendel V7 · Raum 1 · 01.11.2026',
+  version: 'Testraum Mendel V9 · Raum 1 · 01.11.2026',
   title: 'Das Vereinsbüro',
   subtitle: 'Genetik · Der Brief der Käuferin',
   image: '../bilder/buero.jpg',
@@ -19,7 +19,8 @@ TRESOR.room({
   audioLabel: 'Aufnahme anhören',
 
   caseText: function (T) {
-    var t = 'Eine Käuferin zweifelt am Zuchtbuch eines Hundezuchtvereins. Ihr Welpe ist kurzhaarig, der Vater aber langhaarig und die Mutter kurzhaarig. Das könne nicht stimmen.\n\nIhr prüft als Gutachterinnen und Gutachter, ob sie recht hat.';
+    var t = 'Bei einem Zuchtbuch geht es um Genetik: Welche Merkmale geben Eltern an Nachkommen weiter? Eine Käuferin zweifelt am Zuchtbuch eines Hundezuchtvereins. Ihr Welpe ist kurzhaarig, der Vater aber langhaarig und die Mutter kurzhaarig. Das könne nicht stimmen.\n\nIhr prüft als Gutachterinnen und Gutachter, ob sie recht hat.';
+    if (T.isSolved('probe-vererbung')) t += '\n\nIhr wisst jetzt, was ein vererbtes Merkmal ist und was nicht.';
     if (T.isSolved('probe-brief')) t += '\n\nIhr habt den Brief gelesen und getrennt, was die Käuferin sieht und was sie daraus macht.';
     if (T.isSolved('probe-wuerfe-zahl')) t += '\n\nIhr habt das Zuchtbuch geprüft. In den Würfen der Käuferin gibt es keinen langhaarigen Welpen. Zwei der Welpen wurden verpaart, und im neuen Wurf ist ein langhaariger Welpe.';
     return t;
@@ -29,18 +30,23 @@ TRESOR.room({
 
   missions: [
     { id: 'mendel-1', title: 'Mission 1 · Der Brief der Käuferin', unlock: '7794dcd432e29cbf025f430a0ddb233334c81dd3306b226d24b8878637f573c2',
-      intro: { from: 'kemal', text: 'Teil 1 des Gutachtens: Lest den Brief von Frau Sommer, prüft ihre Aussagen und wertet das Zuchtbuch aus.\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
-      requires: ['probe-brief', 'probe-wuerfe-tabelle', 'probe-wuerfe-zahl'],
+      intro: { from: 'kemal', text: 'Teil 1 des Gutachtens. Bei einem Zuchtbuch geht es um Genetik: Welche Merkmale geben Eltern an ihre Nachkommen weiter, und welche nicht?\n\nIm Regal links liegt das Merkmalsblatt des Vereins. Lest es zuerst. Danach prüft ihr den Brief von Frau Sommer und wertet das Zuchtbuch aus.\n\nBrief, Zuchtbuch und Fotos sind nachempfunden und für dieses Spiel vereinfacht. Die Bilder sind KI-Bilder.' },
+      requires: ['probe-vererbung', 'probe-brief', 'probe-wuerfe-tabelle', 'probe-wuerfe-zahl'],
       doneTitle: 'Mission 1 abgeschlossen',
       doneText: 'Teil 1 des Gutachtens ist fertig. Das Zuchtbuch ist nicht widerlegt: Alle Welpen sind kurzhaarig, und keiner hat Fell mittlerer Länge. Ob die Anlage für langes Fell verloren ist, sagen die Zahlen aber nicht.\n\nZwei dieser Welpen wurden später verpaart, und im neuen Wurf ist einer mit langem Fell. In der nächsten Unterrichtsstunde schreibt ihr Teil 2: Welche Erklärungen sind denkbar?' }
   ],
 
   hotspots: [
     { id: 'fotowand', label: 'Fotos der Elterntiere an der Wand', rect: [33.5, 14.5, 33.5, 25.5], action: { type: 'docs', title: 'Die Elterntiere', docs: ['foto-vater', 'foto-mutter'] } },
+    { id: 'regal', label: 'Regal mit dem Merkmalsblatt', rect: [0, 27, 17.5, 26], states: [
+      { if: { unlocked: 'mendel-1', notFound: 'grundlagen' }, action: { type: 'doc', doc: 'grundlagen' } },
+      { if: { unlocked: 'mendel-1', notSolved: 'probe-vererbung' }, action: { type: 'puzzle', puzzle: 'probe-vererbung' } },
+      { if: { solved: 'probe-vererbung' }, action: { type: 'doc', doc: 'grundlagen' } },
+      { action: { type: 'text', text: 'Im Regal liegt ein Merkmalsblatt. Startet zuerst die Mission.' } } ] },
     { id: 'brief', label: 'Pult mit dem Brief der Käuferin', rect: [0, 53, 32.5, 47], states: [
-      { if: { unlocked: 'mendel-1', notSolved: 'probe-brief' }, action: { type: 'puzzle', puzzle: 'probe-brief' } },
+      { if: { solved: 'probe-vererbung', notSolved: 'probe-brief' }, action: { type: 'puzzle', puzzle: 'probe-brief' } },
       { if: { solved: 'probe-brief' }, action: { type: 'docs', title: 'Auftrag, Brief, Foto und Begriffe', docs: ['auftrag', 'm1', 'foto-welpe', 'begriffe'] } },
-      { action: { type: 'text', text: 'Auf dem Pult liegt ein Brief. Startet zuerst die Mission.' } } ] },
+      { action: { type: 'text', text: 'Auf dem Pult liegt ein Brief. Lest zuerst das Merkmalsblatt im Regal und löst die Aufgabe dazu.' } } ] },
     { id: 'zuchtbuch', label: 'Zuchtbuch, Teil 1', rect: [35.5, 56, 30.5, 20.5], states: [
       { if: { solved: 'probe-brief', notSolved: 'probe-wuerfe-tabelle' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-tabelle' } },
       { if: { solved: 'probe-wuerfe-tabelle', notSolved: 'probe-wuerfe-zahl' }, action: { type: 'puzzle', puzzle: 'probe-wuerfe-zahl' } },
@@ -49,8 +55,10 @@ TRESOR.room({
   ],
 
   docs: {
+    'grundlagen': { title: 'Merkmalsblatt · Vererbung in Kürze', tag: 'Info (vereinfacht)', style: 'paper',
+      text: 'Ein Merkmal ist eine Eigenschaft, die man sehen oder messen kann, zum Beispiel Fellfarbe, Fellänge oder Ohrform.\n\nManche Merkmale werden vererbt: Die Eltern geben Erbinformation an ihre Nachkommen weiter. Die Erbinformation legt fest, welche Merkmale ein Tier entwickeln kann. Eine Anlage ist ein Stück dieser Erbinformation, das ein Merkmal beeinflusst.\n\nAndere Merkmale entstehen durch die Umwelt oder durch Erfahrung, zum Beispiel eine Narbe nach einem Unfall oder ein erlernter Trick. Sie werden nicht vererbt.\n\nBei manchen Merkmalen wirken beides zusammen. Das Körpergewicht hängt von den Anlagen und vom Futter ab.\n\nDie Wissenschaft von der Vererbung heißt Genetik. Im Zuchtverein spielt sie jeden Tag eine Rolle: Wer Hunde verpaart, will wissen, welche Merkmale die Welpen bekommen.\n\nTippt danach noch einmal auf das Regal. Dort wartet eine Aufgabe.' },
     'auftrag': { title: 'Auftrag des Vorstands', tag: 'Auftrag (nachempfunden)', style: 'paper',
-      text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet die Käuferin, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Welche Erklärung halten die Daten aus, und was sagt der Züchter dazu?\nTeil 4 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
+      text: 'Der Vorstand bittet euch um ein Gutachten zum Zuchtbuch.\n\nTeil 1 (im Spiel): Was behauptet Frau Sommer, und was steht im Zuchtbuch?\nTeil 2 (im Unterricht): Welche Erklärungen sind denkbar?\nTeil 3 (im Spiel): Was zeigen eure eigenen Zuchtversuche?\nTeil 4 (im Unterricht): Welche Regeln erkennt ihr?\nTeil 5 (im Spiel): Was sagen die Daten zum Einspruch des Züchters?\nTeil 6 (im Unterricht): Eure Empfehlung an den Vorstand.\n\nDanach entscheidet der Vorstand, ob das Zuchtbuch geändert wird.' },
     'm1': { title: 'M1 · Der Brief von Frau Sommer', tag: 'Brief (nachempfunden)', style: 'paper',
       text: 'Von: Frau Sommer\nAn: den Vorstand des Zuchtvereins\nBetreff: Rückforderung von 1.800 Euro\n\nSehr geehrter Vorstand,\n\n„Mein Welpe ist 12 Wochen alt und hat kurzes Fell.“\n„Laut Zuchtbuch ist sein Vater langhaarig, seine Mutter kurzhaarig.“\n„Auch die beiden Geschwister aus dem Wurf haben kurzes Fell.“\n„Das lange Fell des Vaters ist einfach nicht weitergegeben worden.“\n„Die Welpen hätten Fell mittlerer Länge haben müssen.“\n„Bei anderen Züchtern kommt so etwas nie vor.“\n„Ihr Zuchtbuch muss falsch sein.“\n„Der Verein hat mich getäuscht.“\n\nFrau Sommer' },
     'foto-welpe': { title: 'Foto: der Welpe der Käuferin', tag: 'Foto (KI-Bild)', style: 'paper', image: '../bilder/welpe-kurz.jpg',
@@ -71,6 +79,32 @@ TRESOR.room({
   },
 
   puzzles: {
+    'probe-vererbung': { id: 'probe-vererbung', type: 'markup', title: 'Vererbt oder nicht?',
+      ref: { title: 'Zum Nachschlagen: Merkmalsblatt', docs: ['grundlagen'] },
+      prompt: 'Lest das Merkmalsblatt. Ordnet jedes Merkmal eines Hundes zu: vererbt, nicht vererbt oder beides.',
+      passes: [{ id: 'ver', label: 'vererbt', tag: 'vererbt', hint: 'Die Eltern geben es an die Nachkommen weiter.' },
+               { id: 'nic', label: 'nicht vererbt', tag: 'nicht vererbt', hint: 'Es entsteht erst durch Umwelt oder Erfahrung.' },
+               { id: 'bei', label: 'beides', tag: 'beides', hint: 'Anlagen und Umwelt wirken zusammen.' }],
+      segments: [
+        { id: 'm3', nr: 'M1', text: 'Körpergewicht' },
+        { id: 'm6', nr: 'M2', text: 'Das Kunststück „Sitz“' },
+        { id: 'm1', nr: 'M3', text: 'Fellfarbe' },
+        { id: 'm4', nr: 'M4', text: 'Name des Hundes' },
+        { id: 'm5', nr: 'M5', text: 'Ohrform (hängend oder aufrecht)' },
+        { id: 'm2', nr: 'M6', text: 'Narbe am Ohr nach einem Unfall' }
+      ],
+      hash: '6a6aee1e6e083715194126543b62c289bccfb36d1961fe0d2db3f819d351e161',
+      passHash: { ver: '08447a5ace510d798a8cd070af0caffdb779fa047d71f1c534dfe15179e40f7f', nic: '7fba170ce48ab0ef99468f09295d672bd41718f8696e3be74453084cb88ef1ee', bei: '0d8e9ea49a7be3e23c8a9851477d048590c350f1a127c3b5b4f9c4b0184ad8d5' },
+      wrongText: 'Nichts passiert. Mindestens eine Zuordnung passt nicht.',
+      hints: ['Fragt bei jedem Merkmal: Geben die Eltern es an die Nachkommen weiter, oder entsteht es erst im Leben?',
+              'Nur bei einem Merkmal wirken Anlagen und Umwelt zusammen.',
+              'Zwei Merkmale werden vererbt, drei entstehen durch Umwelt oder Erfahrung, eines ist beides.'],
+      rescue: 'VmVyZXJidCB3ZXJkZW4gZGllIEZlbGxmYXJiZSB1bmQgZGllIE9ocmZvcm0uIE5pY2h0IHZlcmVyYnQgd2VyZGVuIGRpZSBOYXJiZSwgZGVyIE5hbWUgdW5kIGRhcyBLdW5zdHN0w7xjazogU2llIGVudHN0ZWhlbiBkdXJjaCBlaW5lbiBVbmZhbGwsIGR1cmNoIE1lbnNjaGVuIG9kZXIgZHVyY2ggTGVybmVuLiBEYXMgS8O2cnBlcmdld2ljaHQgaMOkbmd0IHZvbiBkZW4gQW5sYWdlbiB1bmQgdm9tIEZ1dHRlciBhYiwgYWxzbyBiZWlkZXMu',
+      rescueTask: 'Schreibt je ein weiteres Beispiel für ein vererbtes und ein nicht vererbtes Merkmal ins Logbuch und begründet beide.',
+      onSolve: { message: { from: 'kemal', text: 'Genau darum geht es bei einem Zuchtbuch: um Merkmale, die von den Eltern auf die Welpen übergehen. Ob das Fell dazugehört, prüft ihr jetzt am Brief von Frau Sommer.' },
+        wall: [{ id: 'w-vererbung', title: 'Vererbt oder nicht?', tag: 'Ergebnis', kind: 'ergebnis',
+          text: 'Vererbt: Fellfarbe, Ohrform. Nicht vererbt: Narbe, Name, Kunststück. Beides: Körpergewicht.' }], then: 'probe-brief' } },
+
     'probe-brief': { id: 'probe-brief', type: 'markup', title: 'Der Brief',
       ref: { title: 'Zum Nachschlagen: Begriffskarte', docs: ['begriffe'] },
       prompt: 'Lest den Brief M1. Ordnet jeden Satz zu: Beobachtung, Deutung oder Behauptung.',

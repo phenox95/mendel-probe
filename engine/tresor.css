@@ -411,3 +411,5 @@ body { letter-spacing: .005em; }
 .dlg, .panel, .plan-room { border-width: 1px; }
 .dlg h2, h1, h2, h3 { letter-spacing: -.005em; }
 .start-head .sub { font-style: normal; }
+
+.dlg-doc .doc-text, .doc-text { font-family: var(--sans); font-size: 1.02em; line-height: 1.5; }
