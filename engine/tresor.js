@@ -287,13 +287,60 @@
   var ROOM = null;
   function openAkte(tab) {
     tab = tab || 'fall';
-    var tabs = [['fall', 'Fall'], ['funde', 'Fundstücke'], ['docs', 'Dokumente'], ['archiv', 'Archiv'], ['beweise', 'Beweisakte']];
+    var tabs = [['fall', 'Fall'], ['fortschritt', 'Fortschritt'], ['versuche', 'Versuche'], ['funde', 'Fundstücke'], ['docs', 'Dokumente'], ['archiv', 'Archiv'], ['beweise', 'Beweisakte'], ['auswertung', 'Auswertung']];
     var content = el('div', { class: 'akte-content' });
     var bar = el('div', { class: 'tabs', role: 'tablist' }, tabs.map(function (t) {
       return el('button', { class: 'tab' + (t[0] === tab ? ' on' : ''), role: 'tab', text: t[1], onclick: function () { d.close(); openAkte(t[0]); } });
     }));
     function empty(t) { return el('p', { class: 'muted', text: t }); }
-    if (tab === 'fall') {
+    if (tab === 'fortschritt') {
+      var puzzleIds = ROOM && ROOM.puzzles ? Object.keys(ROOM.puzzles) : [];
+      var solvedCount = puzzleIds.filter(isSolved).length;
+      var missionCount = ROOM && ROOM.missions ? ROOM.missions.length : 0;
+      var missionDone = ROOM && ROOM.missions ? ROOM.missions.filter(function (m) { return m.requires.every(isSolved); }).length : 0;
+      var pct = puzzleIds.length ? Math.round(solvedCount / puzzleIds.length * 100) : 0;
+      content.appendChild(el('p', { class: 'muted', text: 'Gelöste Rätsel: ' + solvedCount + ' von ' + puzzleIds.length + ' (' + pct + ' %)' }));
+      var track = el('div', { class: 'progress-track', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct) });
+      track.appendChild(el('div', { class: 'progress-fill', style: 'width:' + pct + '%' }));
+      content.appendChild(track);
+      if (missionCount) content.appendChild(el('p', { text: 'Abgeschlossene Missionsaufträge: ' + missionDone + ' von ' + missionCount }));
+      puzzleIds.forEach(function (id) {
+        var p = ROOM.puzzles[id], done = isSolved(id), hints = S.hints[id] || 0;
+        content.appendChild(el('div', { class: 'akte-item progress-item' }, [
+          el('strong', { text: (done ? 'Erledigt · ' : 'Offen · ') + (p.title || id) }),
+          el('p', { class: 'muted small', text: done ? ('Tipps genutzt: ' + hints + (S.solved[id].rescue ? ' · Notfallöffnung genutzt' : '')) : (hints ? 'Tipps genutzt: ' + hints : 'Noch nicht gelöst') })
+        ]));
+      });
+    } else if (tab === 'versuche') {
+      var simData = S.vars.sim || {}, simKeys = Object.keys(simData);
+      var totalRuns = 0;
+      simKeys.forEach(function (id) { totalRuns += (simData[id].runs || []).length; });
+      content.appendChild(el('p', { class: 'muted', text: 'Gespeicherte Simulationsläufe: ' + totalRuns }));
+      if (!simKeys.length || !totalRuns) content.appendChild(empty('Noch keine Versuche gespeichert.'));
+      simKeys.forEach(function (id) {
+        var runs = simData[id].runs || [];
+        if (!runs.length) return;
+        var puzzle = ROOM && ROOM.puzzles ? ROOM.puzzles[id] : null;
+        content.appendChild(el('h3', { text: puzzle ? puzzle.title : id }));
+        content.appendChild(tableEl({ head: ['Lauf', 'Ergebnis'], rows: runs.map(function (r) { return [r.label || ('Lauf ' + r.n), r.summary || '']; }) }));
+      });
+    } else if (tab === 'auswertung') {
+      var allIds = ROOM && ROOM.puzzles ? Object.keys(ROOM.puzzles) : [];
+      var doneIds = allIds.filter(isSolved);
+      var usedHints = allIds.reduce(function (n, id) { return n + (S.hints[id] || 0); }, 0);
+      var rescueCount = allIds.filter(function (id) { return !!(S.solved[id] && S.solved[id].rescue); }).length;
+      var failed = (S.log || []).filter(function (x) { return /^fehlversuch /.test(x.e); }).length;
+      content.appendChild(el('h3', { text: 'Auswertung des Teams' }));
+      content.appendChild(el('p', { text: 'Gelöste Rätsel: ' + doneIds.length + ' von ' + allIds.length }));
+      content.appendChild(el('p', { text: 'Genutzte Tipps: ' + usedHints }));
+      content.appendChild(el('p', { text: 'Notfallöffnungen: ' + rescueCount }));
+      content.appendChild(el('p', { text: 'Fehlversuche: ' + failed }));
+      content.appendChild(el('p', { class: 'muted', text: 'Diese Angaben beschreiben den Spielverlauf. Sie sind keine Note und bewerten nicht, wie gut ihr die genetischen Zusammenhänge erklären könnt.' }));
+      content.appendChild(el('h3', { text: 'Abgeschlossene Aufgaben' }));
+      if (!doneIds.length) content.appendChild(empty('Noch kein Rätsel gelöst.'));
+      doneIds.forEach(function (id) { content.appendChild(el('p', { class: 'merksatz', text: ROOM.puzzles[id].title })); });
+      content.appendChild(el('button', { class: 'btn', text: 'Auswertung als Spielstand sichern', onclick: function () { saveFile(); toast('Spielstand mit Auswertung wurde heruntergeladen.', 5000); } }));
+    } else if (tab === 'fall') {
       content.appendChild(el('p', { class: 'muted', text: 'Team: ' + S.team.join(', ') }));
       (ROOM && ROOM.caseText ? paras(ROOM.caseText(api)) : paras('Ihr prüft das Zuchtbuch eines Hundezuchtvereins.')).forEach(function (p) { content.appendChild(p); });
       content.appendChild(el('p', { class: 'muted small', text: 'Notfall-Code (ins Logbuch schreiben): ' + makeCode() }));
